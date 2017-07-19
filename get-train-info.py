@@ -17,7 +17,7 @@ def get_city(province,url):
 	R=requests.get(url)
 	text=R.text.encode('ISO-8859-1').decode('gbk')
 	S=BeautifulSoup(text,BSLIB)
-	return {city:get_train_info (city.text,BASE_URL+city.get("href")) for city in S.select("div > table > tbody > tr > td > a")}
+	return {city.text:get_train_info (city.text,BASE_URL+city.get("href")) for city in S.select("div > table > tbody > tr > td > a")}
 		
 
 def get_train_info(city,url):
@@ -35,6 +35,5 @@ if __name__ == '__main__':
 	text=R.text.encode('ISO-8859-1').decode('gbk')
 	S=BeautifulSoup(text,BSLIB)
 	all_list={item.text:get_city (item.text,BASE_URL+item.get("href")) for item in S.select("table")[4].select("tbody > tr > td > a")}
-	with open("tran_info.json","w+") as file:
-		json.dump(all_list,file)
-		
+	with open("tran_info.json","w+",encoding="utf-8") as file:
+		json.dump(all_list,file,ensure_ascii=False)
