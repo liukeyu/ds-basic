@@ -58,6 +58,6 @@ if __name__ == '__main__':
     while NEXT_PAGE:
         NEXT_PAGE = get_apartment_info(NEXT_PAGE)
         pages += 1
-        # time.sleep(1)
+        time.sleep(.1)
         if pages == 50:
             break
