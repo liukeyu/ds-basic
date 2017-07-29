@@ -42,9 +42,10 @@ def get_apartment_info(url):
             apm_size = apm.select('div.info-panel > div.col-1 > div.where > span')[1].text.strip()
             district = apm.select('div.info-panel > div.col-1 > div.other > div > a')[0].text.strip()
             district2 = apm.select('div.info-panel > div.col-1 > div.other > div > a')[1].text.strip()
+            url = BASE_URL+apm.select('div.info-panel > h2 > a')[0].get('href')
             story = apm.select('div.info-panel > div.col-1 > div.other > div ')[0].text.strip().split('|')[1]
             story=re.sub('\s+', '', story)
-            csvwriter.writerow([district,district2,apm_section,apm_type,apm_size,story,price])
+            csvwriter.writerow([district,district2,apm_section,apm_type,apm_size,story,price,url])
 
 
     next_page = BASE_URL+s.select('body > div.wrapper > div.page-box.house-lst-page-box > a')[-1].get('href')
@@ -57,6 +58,6 @@ if __name__ == '__main__':
     while NEXT_PAGE:
         NEXT_PAGE = get_apartment_info(NEXT_PAGE)
         pages += 1
-        time.sleep(1)
+        # time.sleep(1)
         if pages == 50:
             break
